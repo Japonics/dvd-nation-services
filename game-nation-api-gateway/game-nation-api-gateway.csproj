@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
-        <RootNamespace>dvd_nation_api_gateway</RootNamespace>
+        <RootNamespace>game_nation_api_gateway</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

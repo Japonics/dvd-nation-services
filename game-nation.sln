@@ -1,10 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dvd-nation-api-gateway", "dvd-nation-api-gateway\dvd-nation-api-gateway.csproj", "{0AAA95D2-E48C-48DE-9BA4-F7D6D0E929E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "game-nation-api-gateway", "game-nation-api-gateway\game-nation-api-gateway.csproj", "{0AAA95D2-E48C-48DE-9BA4-F7D6D0E929E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dvd-nation-auth-service", "dvd-nation-auth-service\dvd-nation-auth-service.csproj", "{C2A6B6DC-B67A-4280-9139-9DE4AD44737D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "game-nation-auth-service", "game-nation-auth-service\game-nation-auth-service.csproj", "{C2A6B6DC-B67A-4280-9139-9DE4AD44737D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dvd-nation-admin-service", "dvd-nation-admin-service\dvd-nation-admin-service.csproj", "{1C5D4D6B-6B49-4FCD-BC67-068C0CD8822A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "game-nation-admin-service", "game-nation-admin-service\game-nation-admin-service.csproj", "{1C5D4D6B-6B49-4FCD-BC67-068C0CD8822A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
