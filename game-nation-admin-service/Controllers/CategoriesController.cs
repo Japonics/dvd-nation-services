@@ -4,43 +4,67 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using game_nation_admin_service.Db;
+using game_nation_admin_service.Models;
 
 namespace game_nation_admin_service.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        // GET: api/Categories
+        private readonly Mongo _categoryService;
+
+        public CategoriesController(Mongo catService)
+        {
+            _categoryService = catService;
+        }
+
+        [Route("api/Category")]
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<List<Categories>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _categoryService.GetCategory();
         }
 
-        // GET: api/Categories/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/Categories
+        [Route("api/Category/AddCategory")]
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Categories> AddCategory([FromBody]Categories cat)
         {
+            _categoryService.AddCategory(cat);
+
+            return CreatedAtRoute("GetCategory", new { id = cat.Id }, cat);
         }
 
-        // PUT: api/Categories/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [Route("api/Category/Update/{id}")]
+        [HttpPut("{id:length(24)}")]
+        public IActionResult AttacheCategory(int id, [FromBody]Categories catIn)
         {
+            var cat = _categoryService.GetCategory(id);
+
+            if (cat == null)
+            {
+                return NotFound();
+            }
+
+            _categoryService.AttacheCategory(id, catIn);
+
+            return NoContent();
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [Route("api/Category/DettachCategory/{id}")]
+        [HttpDelete("{id:length(24)}")]
+        public IActionResult DettachCategory(int id)
         {
+            var cat = _categoryService.GetCategory(id);
+
+            if (cat == null)
+            {
+                return NotFound();
+            }
+
+            _categoryService.DettachCategory(cat.Id);
+
+            return NoContent();
         }
     }
 }

@@ -7,15 +7,25 @@ using game_nation_admin_service.Models;
 
 namespace game_nation_admin_service.Db
 {
-    public class MongoDB
+    public class Mongo
     {
         private readonly IMongoCollection<Categories> _categories;
 
-        public MongoDB()
+        public Mongo()
         {
             var _client = new MongoClient("mongodb://localhost:27017");
             var _db = _client.GetDatabase("GameNation");
             _categories = _db.GetCollection<Categories>("Categories");
+        }
+
+        public List<Categories> GetCategory()
+        {
+            return _categories.Find(lib => true).ToList();
+        }
+
+        public Categories GetCategory(int id)
+        {
+            return _categories.Find<Categories>(lib => lib.Id == id).FirstOrDefault();
         }
 
         public Categories AddCategory(Categories cat)
