@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
-namespace dvd_nation_api_gateway
+namespace game_nation_api_gateway
 {
     public class Startup
     {
