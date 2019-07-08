@@ -1,68 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
+using game_nation_admin_service.Dto;
 using Microsoft.AspNetCore.Mvc;
-using game_nation_admin_service.Db;
-using game_nation_admin_service.Models;
+using game_nation_admin_service.Entities;
+using game_nation_admin_service.Repositories;
 
 namespace game_nation_admin_service.Controllers
 {
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly Mongo _categoryService;
+        private readonly CategoriesRepository _categoriesRepository;
 
-        public CategoriesController(Mongo catService)
+        public CategoriesController(CategoriesRepository categoriesRepository)
         {
-            _categoryService = catService;
+            this._categoriesRepository = categoriesRepository;
         }
 
         [Route("api/Category")]
         [HttpGet]
-        public ActionResult<List<Categories>> Get()
+        public ActionResult<List<CategoryDto>> Get()
         {
-            return _categoryService.GetCategory();
+            return this._categoriesRepository.GetCategory();
         }
 
         [Route("api/Category/AddCategory")]
         [HttpPost]
-        public ActionResult<Categories> AddCategory([FromBody]Categories cat)
+        public ActionResult<CategoryDto> AddCategory([FromBody]CategoryDto cat)
         {
-            _categoryService.AddCategory(cat);
+            this._categoriesRepository.AddCategory(cat);
 
             return CreatedAtRoute("GetCategory", new { id = cat.Id }, cat);
         }
 
         [Route("api/Category/Update/{id}")]
         [HttpPut("{id:length(24)}")]
-        public IActionResult AttacheCategory(int id, [FromBody]Categories catIn)
+        public IActionResult AttachCategory(string id, [FromBody]CategoryDto catIn)
         {
-            var cat = _categoryService.GetCategory(id);
+            var cat = this._categoriesRepository.GetCategory(id);
 
             if (cat == null)
             {
                 return NotFound();
             }
 
-            _categoryService.AttacheCategory(id, catIn);
+            this._categoriesRepository.AttachCategory(id, catIn);
 
             return NoContent();
         }
 
-        [Route("api/Category/DettachCategory/{id}")]
+        [Route("api/Category/DetachCategory/{id}")]
         [HttpDelete("{id:length(24)}")]
-        public IActionResult DettachCategory(int id)
+        public IActionResult DetachCategory(int id)
         {
-            var cat = _categoryService.GetCategory(id);
+            var cat = this._categoriesRepository.GetCategory(id);
 
             if (cat == null)
             {
                 return NotFound();
             }
 
-            _categoryService.DettachCategory(cat.Id);
+            this._categoriesRepository.DetachCategory(cat.Id);
 
             return NoContent();
         }

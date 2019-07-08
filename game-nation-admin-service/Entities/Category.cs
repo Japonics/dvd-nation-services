@@ -5,16 +5,14 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace game_nation_admin_service.Models
+namespace game_nation_admin_service.Entities
 {
-    public class Categories
+    public class Category
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string _Id { get; set; }
+        public string Id { get; set; }
 
-        [BsonElement("id")]
-        public int Id { get; set; }
         [BsonElement("name")]
         public string Name { get; set; }
         [BsonElement("description")]
