@@ -1,5 +1,6 @@
 ﻿using game_nation_admin_service.Database;
 using game_nation_admin_service.Repositories;
+using game_nation_admin_service.Services;
 using game_nation_admin_service.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,9 +25,15 @@ namespace game_nation_admin_service
             services.Configure<DatabaseSettings>(Configuration.GetSection("Database"));
             
             services.AddSingleton<Mongo>();
+            
             services.AddSingleton<CategoriesRepository>();
             services.AddSingleton<GamesRepository>();
             services.AddSingleton<StatisticsRepository>();
+
+            services.AddSingleton<CategoriesService>();
+            services.AddSingleton<GamesService>();
+            services.AddSingleton<StatisticsService>();
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

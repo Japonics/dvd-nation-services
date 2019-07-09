@@ -1,4 +1,7 @@
-﻿using game_nation_auth_service.Settings;
+﻿using game_nation_auth_service.Database;
+using game_nation_auth_service.Repositories;
+using game_nation_auth_service.Services;
+using game_nation_auth_service.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +23,17 @@ namespace game_nation_auth_service
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<DatabaseSettings>(Configuration.GetSection("Database"));
+
+            services.AddSingleton<Mongo>();
             
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSingleton<UsersRepository>();
+            
+            services.AddSingleton<AuthService>();
+            services.AddSingleton<UsersService>();
+            
+            services.AddMvc()
+                .AddControllersAsServices()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,7 +49,6 @@ namespace game_nation_auth_service
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

@@ -3,27 +3,28 @@ using game_nation_admin_service.Dto;
 using Microsoft.AspNetCore.Mvc;
 using game_nation_admin_service.Entities;
 using game_nation_admin_service.Repositories;
+using game_nation_admin_service.Services;
 
 namespace game_nation_admin_service.Controllers
 {
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly CategoriesRepository _categoriesRepository;
+        private readonly CategoriesService _categoriesService;
 
-        public CategoriesController(CategoriesRepository categoriesRepository)
+        public CategoriesController(CategoriesService categoriesService)
         {
-            this._categoriesRepository = categoriesRepository;
+            this._categoriesService = categoriesService;
         }
 
-        [Route("api/Category")]
+        [Route("api/category")]
         [HttpGet]
         public ActionResult<List<CategoryDto>> Get()
         {
             return this._categoriesRepository.GetCategory();
         }
 
-        [Route("api/Category/AddCategory")]
+        [Route("api/category")]
         [HttpPost]
         public ActionResult<CategoryDto> AddCategory([FromBody]CategoryDto cat)
         {
@@ -32,7 +33,7 @@ namespace game_nation_admin_service.Controllers
             return CreatedAtRoute("GetCategory", new { id = cat.Id }, cat);
         }
 
-        [Route("api/Category/Update/{id}")]
+        [Route("api/category/{id}")]
         [HttpPut("{id:length(24)}")]
         public IActionResult AttachCategory(string id, [FromBody]CategoryDto catIn)
         {
@@ -48,7 +49,7 @@ namespace game_nation_admin_service.Controllers
             return NoContent();
         }
 
-        [Route("api/Category/DetachCategory/{id}")]
+        [Route("api/category/detach/{id}")]
         [HttpDelete("{id:length(24)}")]
         public IActionResult DetachCategory(int id)
         {
