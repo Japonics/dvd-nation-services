@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using game_nation_client_service.Database;
-using game_nation_client_service.Settings;
+﻿using game_nation_shared.Database;
+using game_nation_shared.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace game_nation_client_service
 {
@@ -28,7 +21,7 @@ namespace game_nation_client_service
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<DatabaseSettings>(Configuration.GetSection("Database"));
-
+            
             services.AddSingleton<Mongo>();
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

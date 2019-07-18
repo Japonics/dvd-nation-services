@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace game_nation_auth_service.Controllers
 {
     [ApiController]
+    [Route("api/auth")]
     public class RegisterController : ControllerBase
     {
 
@@ -15,7 +16,7 @@ namespace game_nation_auth_service.Controllers
             this._usersService = usersService;
         }
         
-        [Route("api/auth/register")]
+        [Route("register")]
         [HttpPost]
         public ActionResult Register([FromBody] RegisterRequestDto registerRequestDto)
         {

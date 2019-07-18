@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using game_nation_admin_service.Dto;
 using Microsoft.AspNetCore.Mvc;
-using game_nation_admin_service.Entities;
-using game_nation_admin_service.Repositories;
 using game_nation_admin_service.Services;
 
 namespace game_nation_admin_service.Controllers
 {
     [ApiController]
+    [Route("api/admin/categories")]
     public class CategoriesController : ControllerBase
     {
         private readonly CategoriesService _categoriesService;
@@ -17,52 +16,42 @@ namespace game_nation_admin_service.Controllers
             this._categoriesService = categoriesService;
         }
 
-        [Route("api/category")]
+        [Route("")]
         [HttpGet]
-        public ActionResult<List<CategoryDto>> Get()
+        public ActionResult<List<CategoryDto>> GetCategories()
         {
-            return this._categoriesRepository.GetCategory();
+            var categories = this._categoriesService.GetCategories();
+            return Ok(categories);
         }
 
-        [Route("api/category")]
+        [Route("")]
         [HttpPost]
         public ActionResult<CategoryDto> AddCategory([FromBody]CategoryDto cat)
         {
-            this._categoriesRepository.AddCategory(cat);
-
-            return CreatedAtRoute("GetCategory", new { id = cat.Id }, cat);
+            var result = this._categoriesService.AddCategory(cat);
+            return Ok(result);
         }
 
-        [Route("api/category/{id}")]
-        [HttpPut("{id:length(24)}")]
-        public IActionResult AttachCategory(string id, [FromBody]CategoryDto catIn)
+        [Route("{categoryId}")]
+        [HttpPut]
+        public ActionResult<CategoryDto> UpdateCategory(string categoryId, [FromBody] CategoryDto categoryDto)
         {
-            var cat = this._categoriesRepository.GetCategory(id);
-
-            if (cat == null)
-            {
-                return NotFound();
-            }
-
-            this._categoriesRepository.AttachCategory(id, catIn);
-
-            return NoContent();
+            var result = this._categoriesService.UpdateCategory(categoryId, categoryDto);
+            return Ok(result);
         }
 
-        [Route("api/category/detach/{id}")]
-        [HttpDelete("{id:length(24)}")]
-        public IActionResult DetachCategory(int id)
+        [Route("{gameId}/attach/{categoryId}")]
+        [HttpPut]
+        public IActionResult AttachCategory(string gameId, string categoryId)
         {
-            var cat = this._categoriesRepository.GetCategory(id);
+            return Ok();
+        }
 
-            if (cat == null)
-            {
-                return NotFound();
-            }
-
-            this._categoriesRepository.DetachCategory(cat.Id);
-
-            return NoContent();
+        [Route("{gameId}/detach/{categoryId}")]
+        [HttpDelete()]
+        public IActionResult DetachCategory(string gameId, string categoryId)
+        {
+            return Ok();
         }
     }
 }

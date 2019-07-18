@@ -1,7 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace game_nation_auth_service.Entities
+namespace game_nation_shared.Entities
 {
     public class User
     {
@@ -11,8 +11,10 @@ namespace game_nation_auth_service.Entities
 
         [BsonElement("username")]
         public string Username { get; set; }
+        
         [BsonElement("email")]
         public string Email { get; set; }
+        
         [BsonElement("password")]
         public string Password { get; set; }
     }

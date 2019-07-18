@@ -1,4 +1,4 @@
-namespace game_nation_admin_service.Repositories
+namespace game_nation_shared.Repositories
 {
     public class GamesRepository
     {

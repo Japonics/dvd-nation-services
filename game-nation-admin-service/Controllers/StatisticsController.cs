@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using game_nation_admin_service.Repositories;
-using Microsoft.AspNetCore.Http;
+﻿using game_nation_admin_service.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace game_nation_admin_service.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/admin/statistics")]
     [ApiController]
     public class StatisticsController : ControllerBase
     {
-        private readonly StatisticsRepository _statisticsRepository;
+        private readonly StatisticsService _statisticsService;
         
-        public StatisticsController(StatisticsRepository statisticsRepository)
+        public StatisticsController(StatisticsService statisticsService)
         {
-            this._statisticsRepository = statisticsRepository;
+            this._statisticsService = statisticsService;
         }
     }
 }

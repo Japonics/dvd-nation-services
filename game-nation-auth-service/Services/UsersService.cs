@@ -2,8 +2,8 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using game_nation_auth_service.Dto;
-using game_nation_auth_service.Entities;
-using game_nation_auth_service.Repositories;
+using game_nation_shared.Entities;
+using game_nation_shared.Repositories;
 
 namespace game_nation_auth_service.Services
 {

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace game_nation_admin_service.Entities
+namespace game_nation_shared.Entities
 {
     public class Category
     {
@@ -15,10 +11,13 @@ namespace game_nation_admin_service.Entities
 
         [BsonElement("name")]
         public string Name { get; set; }
+        
         [BsonElement("description")]
         public string Description { get; set; }
+        
         [BsonElement("color")]
         public string Color { get; set; }
+        
         [BsonElement("icon")]
         public string Icon { get; set; }
     }

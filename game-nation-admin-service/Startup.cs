@@ -1,7 +1,7 @@
-﻿using game_nation_admin_service.Database;
-using game_nation_admin_service.Repositories;
-using game_nation_admin_service.Services;
-using game_nation_admin_service.Settings;
+﻿using game_nation_admin_service.Services;
+using game_nation_shared.Database;
+using game_nation_shared.Repositories;
+using game_nation_shared.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -23,17 +23,19 @@ namespace game_nation_admin_service
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<DatabaseSettings>(Configuration.GetSection("Database"));
-            
-            services.AddSingleton<Mongo>();
-            
-            services.AddSingleton<CategoriesRepository>();
-            services.AddSingleton<GamesRepository>();
-            services.AddSingleton<StatisticsRepository>();
 
-            services.AddSingleton<CategoriesService>();
-            services.AddSingleton<GamesService>();
-            services.AddSingleton<StatisticsService>();
-            
+            services.AddSingleton<Mongo>();
+
+            services
+                .AddScoped<CategoriesRepository>()
+                .AddScoped<GamesRepository>()
+                .AddScoped<StatisticsRepository>();
+
+            services
+                .AddScoped<CategoriesService>()
+                .AddScoped<GamesService>()
+                .AddScoped<StatisticsService>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

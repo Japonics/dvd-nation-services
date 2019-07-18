@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "game-nation-admin-service",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "game-nation-client-service", "game-nation-client-service\game-nation-client-service.csproj", "{63E10895-9662-4A27-8AE4-D555606E2E49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "game-nation-shared", "game-nation-shared\game-nation-shared.csproj", "{2D479E0B-993A-43C8-986C-BD9CC285F523}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{63E10895-9662-4A27-8AE4-D555606E2E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63E10895-9662-4A27-8AE4-D555606E2E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63E10895-9662-4A27-8AE4-D555606E2E49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D479E0B-993A-43C8-986C-BD9CC285F523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D479E0B-993A-43C8-986C-BD9CC285F523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D479E0B-993A-43C8-986C-BD9CC285F523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D479E0B-993A-43C8-986C-BD9CC285F523}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
