@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
 
@@ -9,7 +9,7 @@ services:
     ports:
       - 5000:80
     environment:
-      - ASPNETCORE_ENVIRONMENT: "Docker"
+      - ASPNETCORE_ENVIRONMENT="Docker"
 
   auth:
     depends_on:
@@ -21,7 +21,7 @@ services:
     expose:
       - 5001
     environment:
-      - ASPNETCORE_ENVIRONMENT: "Docker"
+      - ASPNETCORE_ENVIRONMENT="Docker"
 
   client:
     depends_on:
@@ -34,8 +34,8 @@ services:
     expose:
       - 5002
     environment:
-      - ASPNETCORE_ENVIRONMENT: "Docker"
-        
+      - ASPNETCORE_ENVIRONMENT="Docker"
+
   admin:
     depends_on:
       - gateway
@@ -47,13 +47,13 @@ services:
     expose:
       - 5003
     environment:
-      - ASPNETCORE_ENVIRONMENT: "Docker"
+      - ASPNETCORE_ENVIRONMENT="Docker"
 
   db:
     image: mongo
     restart: always
     environment:
-        MONGO_INITDB_ROOT_USERNAME: root
-        MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
     expose:
       - 27017

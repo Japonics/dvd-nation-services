@@ -28,7 +28,7 @@ namespace game_nation_admin_service.Services
                 Description = category.Description,
                 Name = category.Name,
                 Color = category.Color,
-                Icon = category.Icon
+                CoverImage = category.CoverImage
             };
         }
 
@@ -42,7 +42,7 @@ namespace game_nation_admin_service.Services
                 Description = category.Description,
                 Name = category.Name,
                 Color = category.Color,
-                Icon = category.Icon
+                CoverImage = category.CoverImage
             });
         }
 
@@ -53,7 +53,7 @@ namespace game_nation_admin_service.Services
                 Name = categoryDto.Name,
                 Color = categoryDto.Color,
                 Description = categoryDto.Description,
-                Icon = categoryDto.Icon
+                CoverImage = categoryDto.CoverImage
             };
 
             var result = this._categoriesRepository.StoreCategory(category);
@@ -64,7 +64,7 @@ namespace game_nation_admin_service.Services
                 Name = result.Name,
                 Color = result.Color,
                 Description = result.Description,
-                Icon = result.Icon
+                CoverImage = result.CoverImage
             };
         }
 
@@ -75,7 +75,7 @@ namespace game_nation_admin_service.Services
                 Name = categoryDto.Name,
                 Color = categoryDto.Color,
                 Description = categoryDto.Description,
-                Icon = categoryDto.Icon
+                CoverImage = categoryDto.CoverImage
             };
 
             var result = this._categoriesRepository.UpdateCategory(id, category);
@@ -86,7 +86,7 @@ namespace game_nation_admin_service.Services
                 Name = result.Name,
                 Color = result.Color,
                 Description = result.Description,
-                Icon = result.Icon
+                CoverImage = result.CoverImage
             };
         }
     }

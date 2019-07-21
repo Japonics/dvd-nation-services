@@ -1,10 +1,14 @@
-﻿using game_nation_shared.Database;
+﻿using System.Text;
+using game_nation_shared.Database;
+using game_nation_shared.Extensions;
 using game_nation_shared.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace game_nation_client_service
 {
@@ -22,7 +26,30 @@ namespace game_nation_client_service
         {
             services.Configure<DatabaseSettings>(Configuration.GetSection("Database"));
             
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+            
             services.AddSingleton<Mongo>();
+            
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -40,7 +67,8 @@ namespace game_nation_client_service
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            app.UseAuthentication();
+            app.UseAuthMiddleware();
             app.UseMvc();
         }
     }

@@ -46,13 +46,13 @@ namespace game_nation_shared.Repositories
             var users = this._database.GetCollection<Category>(CategoriesCollection);
             var filter = Builders<Category>.Filter.Eq("_id", BsonObjectId.Create(id));
             var update = Builders<Category>.Update
-                .Set("icon", category.Icon)
+                .Set("cover_image", category.CoverImage)
                 .Set("description", category.Description)
                 .Set("color", category.Color)
                 .Set("name", category.Name);
             
             users.UpdateOne(filter, update);
-
+            category.Id = id;
             return category;
         }
         

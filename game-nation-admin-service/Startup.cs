@@ -1,12 +1,17 @@
-﻿using game_nation_admin_service.Services;
+﻿using System.Text;
+using game_nation_admin_service.Services;
 using game_nation_shared.Database;
+using game_nation_shared.Extensions;
 using game_nation_shared.Repositories;
+using game_nation_shared.Services;
 using game_nation_shared.Settings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace game_nation_admin_service
 {
@@ -24,17 +29,42 @@ namespace game_nation_admin_service
         {
             services.Configure<DatabaseSettings>(Configuration.GetSection("Database"));
 
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
             services.AddSingleton<Mongo>();
+            services.AddScoped<Auth>();
 
             services
                 .AddScoped<CategoriesRepository>()
                 .AddScoped<GamesRepository>()
-                .AddScoped<StatisticsRepository>();
+                .AddScoped<StatisticsRepository>()
+                .AddScoped<UsersRepository>();
 
             services
                 .AddScoped<CategoriesService>()
                 .AddScoped<GamesService>()
                 .AddScoped<StatisticsService>();
+
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -58,7 +88,8 @@ namespace game_nation_admin_service
                     .AllowAnyHeader()
             );
 
-            app.UseHttpsRedirection();
+            app.UseAuthentication();
+            app.UseAuthMiddleware();
             app.UseMvc();
         }
     }
