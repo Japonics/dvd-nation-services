@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using game_nation_auth_service.Services;
 using game_nation_shared.Database;
+using game_nation_shared.Entities;
 using game_nation_shared.Repositories;
 using game_nation_shared.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,6 +16,8 @@ namespace game_nation_auth_service
 {
     public class Startup
     {
+        public readonly string CorsOriginCustomSpecification = "_corsOriginCustomSpecification";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,10 +29,10 @@ namespace game_nation_auth_service
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<DatabaseSettings>(Configuration.GetSection("Database"));
-            
+
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
-            
+
             services
                 .AddSingleton<Mongo>();
 
@@ -39,9 +42,6 @@ namespace game_nation_auth_service
             services
                 .AddScoped<AuthService>()
                 .AddScoped<UsersService>();
-
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
@@ -62,6 +62,21 @@ namespace game_nation_auth_service
                         ValidateAudience = false
                     };
                 });
+
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CorsOriginCustomSpecification,
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
+            
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +92,7 @@ namespace game_nation_auth_service
                 app.UseHsts();
             }
 
+            app.UseCors(CorsOriginCustomSpecification);
             app.UseAuthentication();
             app.UseMvc();
         }

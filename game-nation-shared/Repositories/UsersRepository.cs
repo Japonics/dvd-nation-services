@@ -33,6 +33,12 @@ namespace game_nation_shared.Repositories
             var users = this._database.GetCollection<User>(UsersCollection);
             return users.Find(x => x.Id != null).ToList();
         }
+
+        public IEnumerable<User> GetAdmins()
+        {
+            var users = this._database.GetCollection<User>(UsersCollection);
+            return users.Find(x => x.IsAdmin == true).ToList();
+        }
         
         public void StoreUser(User user)
         {
@@ -45,9 +51,21 @@ namespace game_nation_shared.Repositories
             var users = this._database.GetCollection<User>(UsersCollection);
             var filter = Builders<User>.Filter.Eq("_id", BsonObjectId.Create(user.Id));
             var update = Builders<User>.Update
-                .Set("username", user.Username);
+                .Set("username", user.Username)
+                .Set("is_admin", user.IsAdmin);
             
             users.UpdateOne(filter, update);
+        }
+
+        public void ChangeIsAdminRole(string userId, bool isAdmin)
+        {
+            var user = this.GetUserById(userId);
+
+            if (user == null) return;
+
+            user.IsAdmin = isAdmin;
+            
+            this.UpdateUser(user);
         }
     }
 }

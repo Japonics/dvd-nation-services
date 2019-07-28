@@ -10,6 +10,7 @@ namespace game_nation_auth_service.Controllers
     [Route("api/auth")]
     public class AuthController : ControllerBase
     {
+        
         private readonly AuthService _authService;
 
         public AuthController(AuthService userService)
