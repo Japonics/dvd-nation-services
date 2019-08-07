@@ -46,7 +46,8 @@ namespace game_nation_auth_service.Services
             result.User = new UserDto()
             {
                 Email = user.Email,
-                Username = user.Username
+                Username = user.Username,
+                IsAdmin = user.IsAdmin
             };
             
             return result;
