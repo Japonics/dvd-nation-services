@@ -7,6 +7,7 @@ using game_nation_shared.Repositories;
 using game_nation_shared.Settings;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Bson;
 
 namespace game_nation_auth_service.Services
 {
@@ -29,13 +30,22 @@ namespace game_nation_auth_service.Services
             if (user == null)
                 return null;
 
+            var userDataPayload = new UserDto()
+            {
+                Email = user.Email,
+                Username = user.Username,
+                Role = user.Role
+            };
+            
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(new Claim[] 
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, userDataPayload.Role),
+                    new Claim(ClaimTypes.UserData, userDataPayload.ToJson()), 
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -43,12 +53,6 @@ namespace game_nation_auth_service.Services
             
             var token = tokenHandler.CreateToken(tokenDescriptor);
             result.Token = tokenHandler.WriteToken(token);
-            result.User = new UserDto()
-            {
-                Email = user.Email,
-                Username = user.Username,
-                IsAdmin = user.IsAdmin
-            };
             
             return result;
         }

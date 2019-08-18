@@ -18,7 +18,7 @@ namespace game_nation_shared.Entities
         [BsonElement("password")]
         public string Password { get; set; }
 
-        [BsonElement("is_admin")]
-        public bool IsAdmin { get; set; }
+        [BsonElement("role")]
+        public string Role { get; set; }
     }
 }
