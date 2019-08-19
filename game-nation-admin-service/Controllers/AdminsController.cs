@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using game_nation_admin_service.Dto;
+using game_nation_shared.Models;
 using game_nation_shared.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +28,7 @@ namespace game_nation_admin_service.Controllers
         [HttpPut]
         public ActionResult SetAdminRole(string userId)
         {
-            this._usersRepository.ChangeIsAdminRole(userId, true);
+            this._usersRepository.ChangeIsAdminRole(userId, Roles.ADMIN);
             return Ok();
         }
 
@@ -35,7 +36,7 @@ namespace game_nation_admin_service.Controllers
         [HttpDelete]
         public ActionResult UnsetAdminRole(string userId)
         {
-            this._usersRepository.ChangeIsAdminRole(userId, false);
+            this._usersRepository.ChangeIsAdminRole(userId, Roles.USER);
             return Ok();
         }
     }
