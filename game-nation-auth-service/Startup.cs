@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using game_nation_auth_service.Services;
 using game_nation_shared.Database;
-using game_nation_shared.Entities;
 using game_nation_shared.Repositories;
 using game_nation_shared.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

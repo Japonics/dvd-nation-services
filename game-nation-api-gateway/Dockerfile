@@ -2,13 +2,11 @@ FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build-env
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
-COPY ./../game-nation-shared/*.csproj ./
-COPY *.csproj ./
+COPY ./game-nation-api-gateway/game-nation-api-gateway.csproj ./game-nation-api-gateway.csproj
 RUN dotnet restore
 
 # Copy everything else and build
-COPY . ./
-COPY ./../game-nation-shared/* ./
+COPY ./game-nation-api-gateway/* ./
 RUN dotnet publish -c Release -o out
 
 # Build runtime image

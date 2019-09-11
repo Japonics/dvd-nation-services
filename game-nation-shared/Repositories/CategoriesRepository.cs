@@ -10,16 +10,10 @@ namespace game_nation_shared.Repositories
     {
         private readonly IMongoDatabase _database;
         private const string CategoriesCollection = "categories";
-        
+
         public CategoriesRepository(Mongo database)
         {
             this._database = database.Database;
-        }
-        
-        public List<Category> GetCategory()
-        {
-            var categories = this._database.GetCollection<Category>(CategoriesCollection);
-            return categories.Find(lib => true).ToList();
         }
 
         public Category GetCategory(string id)
@@ -27,7 +21,7 @@ namespace game_nation_shared.Repositories
             var categories = this._database.GetCollection<Category>(CategoriesCollection);
             return categories.Find<Category>(lib => lib.Id == id).FirstOrDefault();
         }
-        
+
         public IEnumerable<Category> GetCategories()
         {
             var categories = this._database.GetCollection<Category>(CategoriesCollection);
@@ -48,14 +42,13 @@ namespace game_nation_shared.Repositories
             var update = Builders<Category>.Update
                 .Set("cover_image", category.CoverImage)
                 .Set("description", category.Description)
-                .Set("color", category.Color)
                 .Set("name", category.Name);
-            
+
             users.UpdateOne(filter, update);
             category.Id = id;
             return category;
         }
-        
+
         public void AttachCategory(string id, Category catIn)
         {
             var categories = this._database.GetCollection<Category>(CategoriesCollection);

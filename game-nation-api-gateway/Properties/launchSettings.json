@@ -1,21 +1,7 @@
 ﻿{
   "$schema": "http://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false, 
-    "anonymousAuthentication": true, 
-    "iisExpress": {
-      "applicationUrl": "http://localhost:46823",
-      "sslPort": 44370
-    }
-  },
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "dvd_nation_api_gateway": {
+    "game_nation_api_gateway": {
       "commandName": "Project",
       "applicationUrl": "http://localhost:5001",
       "environmentVariables": {

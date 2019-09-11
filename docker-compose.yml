@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+
+  gateway:
+    build:
+      context: .
+      dockerfile: ./game-nation-api-gateway/Dockerfile
+    ports:
+      - 5000:5000
+    expose:
+      - 5000
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:5000
+
+  auth:
+    depends_on:
+      - gateway
+      - db
+    build:
+      context: .
+      dockerfile: ./game-nation-auth-service/Dockerfile
+    ports:
+      - 5001:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+
+  client:
+    depends_on:
+      - gateway
+      - db
+      - auth
+    build:
+      context: .
+      dockerfile: ./game-nation-client-service/Dockerfile
+    ports:
+      - 5002:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+
+  admin:
+    depends_on:
+      - gateway
+      - db
+      - auth
+    build:
+      context: .
+      dockerfile: ./game-nation-admin-service/Dockerfile
+    ports:
+      - 5003:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+
+  db:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root

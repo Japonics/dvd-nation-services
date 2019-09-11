@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <RootNamespace>game_nation_client_service</RootNamespace>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,6 +22,30 @@
 
     <ItemGroup>
       <ProjectReference Include="..\game-nation-shared\game-nation-shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ResolveComReferenceCache Remove="obj\Release\netcoreapp2.2\game-nation-client-service.csproj.ResolveComReference.cache" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <IntermediateAssembly Remove="obj\Release\netcoreapp2.2\game-nation-client-service.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_DebugSymbolsIntermediatePath Remove="obj\Release\netcoreapp2.2\game-nation-client-service.pdb" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_DeploymentManifestEntryPoint Remove="obj\Release\netcoreapp2.2\game-nation-client-service.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ApplicationManifest Remove="obj\Release\netcoreapp2.2\game-nation-client-service.dll.manifest" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <DeployManifest Remove="obj\Release\netcoreapp2.2\game-nation-client-service.application" />
     </ItemGroup>
 
 </Project>

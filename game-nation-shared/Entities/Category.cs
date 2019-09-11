@@ -15,9 +15,6 @@ namespace game_nation_shared.Entities
         [BsonElement("description")]
         public string Description { get; set; }
         
-        [BsonElement("color")]
-        public string Color { get; set; }
-        
         [BsonElement("cover_image")]
         public string CoverImage { get; set; }
     }

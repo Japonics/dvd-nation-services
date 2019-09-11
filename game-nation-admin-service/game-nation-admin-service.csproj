@@ -5,12 +5,12 @@
         <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
         <RootNamespace>game_nation_admin_service</RootNamespace>
         <AssemblyName>game-nation-admin-service</AssemblyName>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
         <PackageReference Include="MongoDB.Driver" Version="2.9.0-beta2" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
@@ -18,6 +18,30 @@
 
     <ItemGroup>
       <ProjectReference Include="..\game-nation-shared\game-nation-shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ResolveComReferenceCache Remove="obj\Release\netcoreapp2.2\game-nation-admin-service.csproj.ResolveComReference.cache" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <IntermediateAssembly Remove="obj\Release\netcoreapp2.2\game-nation-admin-service.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_DebugSymbolsIntermediatePath Remove="obj\Release\netcoreapp2.2\game-nation-admin-service.pdb" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_DeploymentManifestEntryPoint Remove="obj\Release\netcoreapp2.2\game-nation-admin-service.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ApplicationManifest Remove="obj\Release\netcoreapp2.2\game-nation-admin-service.dll.manifest" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <DeployManifest Remove="obj\Release\netcoreapp2.2\game-nation-admin-service.application" />
     </ItemGroup>
 
 </Project>
